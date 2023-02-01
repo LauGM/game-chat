@@ -1,22 +1,14 @@
-# 2d-Blockgame
+# 2d-Blockgame and chat
 
 >This is a simple Blockgame example of rendering data from the client to server components 
-
-
-
-
-![Screenshot (18)](https://user-images.githubusercontent.com/65927932/177240406-641fdc47-304f-40c6-b6c5-5a0420a08676.png)
-
-
+>Added: A chat between active users
 
 **Tools Used**
 - Node.js
 - express.js 
 - Vue.js
 
-
-
 ## Link to Game 
-Here is a link to the game(https://blockgame2.netlify.app)
+Here is a link to the game(https://clientito.netlify.app)
 
 

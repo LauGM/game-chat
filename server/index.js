@@ -1,3 +1,12 @@
+/*import Express from "express";
+import Http from "http";
+import Socketio from "socket.io";
+Http.Server(Express);
+Socketio(Http, {
+  cors: {
+    origin: "*",
+  },
+});*/
 const Express = require("express")();
 const Http = require("http").Server(Express);
 const Socketio = require("socket.io")(Http, {
@@ -7,12 +16,15 @@ const Socketio = require("socket.io")(Http, {
 });
 
 let position = {
-  x: 200,
-  y: 200,
+  x: 300,
+  y: 100,
 };
+
+let bienvenida="Bienvenidos al juego";
 
 Socketio.on("connection", (socket) => {
   socket.emit("position", position);
+  socket.emit("bienvenida", bienvenida);
   socket.on("move", (data) => {
     switch (data) {
       case "left":
@@ -32,6 +44,10 @@ Socketio.on("connection", (socket) => {
         Socketio.emit("position", position);
         break;
     }
+  });
+  socket.on("respuesta", (respuesta) => {
+    bienvenida += "\n"+respuesta;
+    Socketio.emit("bienvenida",bienvenida);
   });
 });
 

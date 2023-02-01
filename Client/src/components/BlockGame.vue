@@ -9,6 +9,16 @@
       <button v-on:click="move('up')">Up</button>
       <button v-on:click="move('down')">Down</button>
     </p>
+    <div>
+      <label for="nombre">Ingresa tu nombre para comenzar</label>
+      <input type="text" name="nombre" id="nombre" v-model='nombre'> 
+    </div>
+    <div v-if="nombre">
+      <textarea name="chat" id="chat" cols="30" rows="10" v-model="bienvenida"></textarea>
+      <input type="text" name="resp" id="resp" v-model="respuesta">
+      <button @click="responder()">Responder</button>
+    </div>
+    
   </div>
 </template>
 
@@ -24,10 +34,14 @@ export default {
         x: 0,
         y: 0,
       },
+      bienvenida:'',
+      nombre:'',
+      respuesta:''
     };
   },
   created() {
-    this.socket = io("http://localhost:3000");
+    //this.socket = io("http://localhost:3000");
+    this.socket = io("https://server-vtk5.onrender.com");
   },
   mounted() {
     this.context = this.$refs.game.getContext("2d");
@@ -41,11 +55,17 @@ export default {
       );
       this.context.fillRect(this.position.x, this.position.y, 20, 20);
     });
+    this.socket.on("bienvenida", (data) => {
+      this.bienvenida = data;
+    });
   },
   methods: {
     move(direction) {
       this.socket.emit("move", direction);
     },
+    responder(){
+      this.socket.emit("respuesta", this.nombre+": "+this.respuesta)
+    }
   },
 };
 </script>
